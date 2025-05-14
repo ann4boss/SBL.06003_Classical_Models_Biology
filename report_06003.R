@@ -371,6 +371,6 @@ lotka_volterra_mutalistic(
 # For the totality of the system this means that :
 # Mutualistic interactions are too strong compared to self-limitation. This means
 # that the mutualistic feedback loops can overpower self regulation and a small
-# small can already be enough to push the system into uncontrolled growth also
+# change can already be enough to push the system into uncontrolled growth also
 # called runaway amplification (in this case) or collapse.
 
