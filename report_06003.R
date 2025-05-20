@@ -122,14 +122,14 @@ lotka_volterra_competing(initial_condition = c(N1 = 1.5, N2 = 1), parameter = c(
 # Case 3: species 2 outcompetes species 1
 lotka_volterra_competing(initial_condition = c(N1 = 0.2, N2 = 3), parameter = c(r1 = 3.5, r2 = 1.5, alpha11 = 0.5, alpha12 = 1, alpha21 = 1, alpha22 = 0.5), equilibrium = 'eq2')
 # Case 4: priority effect: one species outcompetes the other, but it depends on the initial conditions
-lotka_volterra_competing(initial_condition = c(N1 = 3.5, N2 = 3), parameter = c(r1 = 2, r2 = 2, alpha11 = 0.5, alpha12 = 1, alpha21 = 1, alpha22 = 0.5))
-lotka_volterra_competing(initial_condition = c(N1 = 3, N2 = 3.5), parameter = c(r1 = 2, r2 = 2, alpha11 = 0.5, alpha12 = 1, alpha21 = 1, alpha22 = 0.5))
+lotka_volterra_competing(initial_condition = c(N1 = 3.5, N2 = 3), parameter = c(r1 = 2, r2 = 2, alpha11 = 0.5, alpha12 = 1, alpha21 = 1, alpha22 = 0.5), equilibrium = 'eq4')
+lotka_volterra_competing(initial_condition = c(N1 = 3, N2 = 3.5), parameter = c(r1 = 2, r2 = 2, alpha11 = 0.5, alpha12 = 1, alpha21 = 1, alpha22 = 0.5), equilibrium = 'eq4')
 
 
 ###Discussion of the results###
 ##Case 1:
 #Two species can coexist when the intraspecific competition (alpha11 and alpha22) is greater than interspecific competition.
-#Therefore, this following has to be true: alpha11*alpha22 > alpha12*alpha21.
+#Therefore, the following has to be true: alpha11*alpha22 > alpha12*alpha21.
 #Additionally, the initial conditions has to be positive (>0) for both species.
 
 ##Case 2 and Case 3:
@@ -140,18 +140,13 @@ lotka_volterra_competing(initial_condition = c(N1 = 3, N2 = 3.5), parameter = c(
 
 
 #Case 4:
-#
+#One species can dominate the other, but it depends on which species starts with a numerical advantage.
+#This scenario occurs when the interspecific competition is stronger than the intraspecific competition: alpha11 * alpha22 < alpha12 * alpha21
+#Under this condition a stable coexistence is not possible. The coexistence equilibrium exists, but it is not stable due to the stronger interspecific than intraspecific competition. 
+#The trajectory will move away from the equilibrium point to the equilibrium of the species with the higher initial condition.
+#Therefore, setting the initial conditions to a very low value for one species and a high value for the other species will lead to the extinction of the species with the lower initial condition.
 
 
-# Notes: (can be deleted)
-# r:intrinsic growth rates
-# alpha11, alpha22: intraspecific competition
-# alpha12, alpha21: interspecific competition
-# coexisting equilibrium: dN1/dt=0 and dN2/dt=0
-# this leads to:
-# r1 = alpha11*N1 + alpha12*N2 &
-# r2 = alpha21*N1 + alpha22*N2
-# matrix form: A * N = b
 
 
 #############################################################
@@ -314,7 +309,7 @@ lotka_volterra_mutalistic <- function(initial_condition = c(N1 = 2.5, N2 = 0.5),
          bty = "n")
 }
 
-# (1) there exixsts a positive equilibrium points which is stable
+# (1) there exists a positive equilibrium point which is stable
 lotka_volterra_mutalistic(
   initial_condition = c(N1 = 15, N2 = 25),
   parameters = c(
@@ -324,17 +319,15 @@ lotka_volterra_mutalistic(
   )
 )
 
-# (2)  there exists a positive equilibrium points, but which is unstable
+# (2)  there exists a positive equilibrium point, but it is unstable
 lotka_volterra_mutalistic(
   initial_condition = c(N1 = 0.5, N2 = 0.5),
   parameters = c(
     r1 = 1.2, r2 = 1.0,
     alpha11 = 1.6, alpha22 = 1.35,
     gamma12 = 0.6, gamma21 = 0.5
-  )
+  ), scale = 0.05
 )
-
-# moves through the analytical equilibrium point and away from it -> unstable
 
 # Discussion of the results
 
